@@ -1,0 +1,19 @@
+---
+    - hosts: localhost
+      user: ec2-user
+      connection: local
+      become: yes
+      tasks:
+       - name: Launching Ec2 Instance      
+         ec2:
+            key_name: ansiblekey
+            instance_type: t2.micro
+            region: us-east-1
+            image: ami-08f3d892de259504d
+            group: GIT_SG
+            count: 1
+            vpc_subnet_id: subnet-26867307
+            wait: yes
+            assign_public_ip: yes
+       - name: Execute Shell
+         script: /home/ec2-user/pyec2.py
